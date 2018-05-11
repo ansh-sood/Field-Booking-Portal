@@ -1,0 +1,207 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<div class="wrapper">
+    <div class="sidebar" data-background-color="white" data-active-color="danger">
+
+    <!--
+		Tip 1: you can change the color of the sidebar's background using: data-background-color="white | black"
+		Tip 2: you can change the color of the active button using the data-active-color="primary | info | success | warning | danger"
+	-->
+
+    	<div class="sidebar-wrapper">
+            <div class="logo" style="text-align:center">
+                <h3><strong>ADMIN</strong></h3>
+            </div>
+
+            <form class="form-horizontal" role="form" action="{% url 'administer:search'%}" method="POST">
+                {% csrf_token %}
+                <div style="text-align:center">
+                    <br><br>
+                    <label for="sss">Select Sport</label><br>
+                    <select class="form-fill" name="sport1" id = "sss">
+                        <option>--</option>
+                        <option>Cricket</option>
+                        <option>Tennis</option>
+                        <option>Badminton</option>
+                        <option>Basketball</option>
+                        <option>Athletic Ground</option>
+                        <option>Volleyball</option>
+                        <option>Hockey</option>
+                        <option>Football</option>
+                    </select>
+                    <br><br><br><br><br><br><br><br>
+
+                    <button type="submit" class="btn btn-info btn-fill btn-wd">Next &nbsp<i class="ti-arrow-right"></i></button>
+                </div>
+            </form>
+
+    	</div>
+    </div>
+
+    <div class="main-panel">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar bar1"></span>
+                        <span class="icon-bar bar2"></span>
+                        <span class="icon-bar bar3"></span>
+                    </button>
+                    <div class="animated slideInLeft">
+                    {% for user in user_list|slice:":1" %}
+                        <strong><h3>{{ user.sport1 }}</h3></strong>
+                    {% endfor %}
+                    </div>
+                </div>
+
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="{% url 'administer:reset_calender'%}">
+								<i class="ti-calendar"></i>
+								<p>Reset Calendar</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'administer:history'%}">
+								<i class="ti-agenda"></i>
+								<p>History</p>
+                            </a>
+                        </li>
+						<li>
+                            <a href="{% url 'main:search'%}">
+								<i class="ti-home"></i>
+								<p>Home</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'logout'%}">
+                                <i class="ti-close"></i>
+								<p>Logout</p>
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </nav>
+        <div class="content">
+            <div class="container-fluid">
+                {% for user in user_list %}
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card animated pulse">
+                            <div class="header">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <h4>Request From: &nbsp{{ user.username }}</h4>
+                                        <h6>Sport: &nbsp{{ user.sport1 }}</h6>
+                                        <h6>Month: &nbsp{{ user.month1 }}</h6>
+                                        <h6>Date: &nbsp{{ user.date1 }}</h6>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div style="text-align:center"><strong>Purpose of Booking</strong></div>
+                                            <pre>{{ user.purpose }}</pre>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="content">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <h6>Slots Requested:</h6>
+                                        {% if user.check_1 == "1" %}
+                                            <h7>6:00 AM to 6:30 AM</h7>&nbsp&nbsp&nbsp&nbsp
+                                        {% endif %}
+                                        {% if user.check_2 == "1" %}
+                                            <h7>6:30 AM to 7:00 AM</h7>&nbsp&nbsp&nbsp&nbsp
+                                        {% endif %}
+                                        {% if user.check_3 == "1" %}
+                                            <h7>7:00 AM to 7:30 AM</h7>&nbsp&nbsp&nbsp&nbsp
+                                        {% endif %}
+                                        {% if user.check_4 == "1" %}
+                                            <h7>7:30 AM to 8:00 AM</h7>&nbsp&nbsp&nbsp&nbsp
+                                        {% endif %}
+                                        {% if user.check_5 == "1" %}
+                                            <h7>8:00 AM to 8:30 AM</h7>&nbsp&nbsp&nbsp&nbsp
+                                        {% endif %}
+                                        {% if user.check_6 == "1" %}
+                                            <h7>8:30 AM to 9:00 AM</h7>&nbsp&nbsp&nbsp&nbsp
+                                        {% endif %}
+                                        {% if user.check_7 == "1" %}
+                                            <h7>5:00 PM to 5:30 PM</h7>&nbsp&nbsp&nbsp&nbsp
+                                        {% endif %}
+                                        {% if user.check_8 == "1" %}
+                                            <h7>5:30 PM to 6:00 PM</h7>&nbsp&nbsp&nbsp&nbsp
+                                        {% endif %}
+                                        {% if user.check_9 == "1" %}
+                                            <h7>6:00 PM to 6:30 PM</h7>&nbsp&nbsp&nbsp&nbsp
+                                        {% endif %}
+                                        {% if user.check_10 == "1" %}
+                                            <h7>6:30 PM to 7:00 PM</h7>&nbsp&nbsp&nbsp&nbsp
+                                        {% endif %}
+                                        {% if user.check_11 == "1" %}
+                                            <h7>7:00 PM to 7:30 PM</h7>&nbsp&nbsp&nbsp&nbsp
+                                        {% endif %}
+                                        {% if user.check_12 == "1" %}
+                                            <h7>7:30 PM to 8:00 PM</h7>&nbsp&nbsp&nbsp&nbsp
+                                        {% endif %}
+                                        {% if user.check_13 == "1" %}
+                                            <h7>8:00 PM to 8:30 PM</h7>&nbsp&nbsp&nbsp&nbsp
+                                        {% endif %}
+                                        {% if user.check_14 == "1" %}
+                                            <h7>8:30 PM to 9:00 PM</h7>&nbsp&nbsp&nbsp&nbsp
+                                        {% endif %}
+                                        {% if user.check_15 == "1" %}
+                                            <h7>9:00 PM to 9:30 PM</h7>&nbsp&nbsp&nbsp&nbsp
+                                        {% endif %}
+                                        {% if user.check_16 == "1" %}
+                                            <h7>9:30 PM to 10:00 PM</h7>&nbsp&nbsp&nbsp&nbsp
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-md-5">
+                                         <br>
+                                         <h6>Requested on: &nbsp{{ user.date2 }}</h6>
+                                    </div>
+                                    <div class="col-md-2">
+                                         <form class="form-horizontal" role="form" action="{% url 'administer:approve' user.id%}" method="POST">
+                                             {% csrf_token %}
+                                             <button type="submit" class="btn btn-info btn-fill btn-wd">Approve</button>
+                                         </form>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <form class="form-horizontal" role="form" action="{% url 'administer:reject' user.id%}" method="POST">
+                                             {% csrf_token %}
+                                            <button type="submit" class="btn btn-info btn-fill btn-wd">Reject</button>
+                                         </form>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                 {% endfor %}
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+</div>
+
+
+
+{% endblock %}

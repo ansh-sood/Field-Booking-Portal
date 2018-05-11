@@ -1,0 +1,521 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<div class="wrapper">
+    <div class="sidebar" data-background-color="white" data-active-color="danger">
+
+    <!--
+		Tip 1: you can change the color of the sidebar's background using: data-background-color="white | black"
+		Tip 2: you can change the color of the active button using the data-active-color="primary | info | success | warning | danger"
+	-->
+
+    	<div class="sidebar-wrapper">
+            <div class="logo" style="text-align:center">
+                <h3><strong>Welcome</strong></h3>
+                <h5><strong><div style="text-transform: lowercase">{{ request.user.username }}</div></strong></h5>
+            </div>
+
+            <form class="form-horizontal" role="form" action="{% url 'main:search'%}" method="POST">
+                {% csrf_token %}
+                <div style="text-align:center">
+                    <br><br>
+                    <label for="ss">Select Sport</label><br>
+                    <select class="form-fill" name="sport" id = "ss">
+                        <option>--</option>
+                        <option>Cricket</option>
+                        <option>Tennis</option>
+                        <option>Badminton</option>
+                        <option>Basketball</option>
+                        <option>Athletic Ground</option>
+                        <option>Volleyball</option>
+                        <option>Hockey</option>
+                        <option>Football</option>
+                    </select>
+                    <br><br><br><br><br><br><br><br>
+                    <label for="mm">Select Month</label><br>
+                    <select class="form-fill"  name="month" id = "mm">
+                        <option>--</option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                        <option>7</option>
+                        <option>8</option>
+                        <option>9</option>
+                        <option>10</option>
+                        <option>11</option>
+                        <option>12</option>
+                    </select>
+                    <br><br><br><br><br><br><br>
+
+                    <button type="submit" class="btn btn-info btn-fill btn-wd">Next &nbsp<i class="ti-arrow-right"></i></button>
+                </div>
+            </form>
+
+    	</div>
+    </div>
+
+    <div class="main-panel">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar bar1"></span>
+                        <span class="icon-bar bar2"></span>
+                        <span class="icon-bar bar3"></span>
+                    </button>
+                    <div class="animated slideInLeft">
+                    <strong><h3>{{ selected_date.sport }}</h3></strong>
+                    <strong><h6>Month: {{ selected_date.month }}&nbsp Date: {{ selected_date.date }}</h6></strong>
+                    </div>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="{% url 'main:notify'%}">
+								<i class="ti-bell"></i>
+								<p>Notifications</p>
+                            </a>
+                        </li>
+						{% if request.user.username == "aa" %}
+                        <li>
+                            <a href="{% url 'administer:administer'%}">
+								<i class="ti-bag"></i>
+								<p>Admin</p>
+                            </a>
+                        </li>
+                        {% endif %}
+                        <li>
+                            <a href="{% url 'logout'%}">
+                                <i class="ti-close"></i>
+								<p>Logout</p>
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </nav>
+
+
+        <div class="content">
+            <div class="container-fluid">
+            {% if mssg %}<div style="color:#1b5bd3;text-align: center">{{ mssg }}</div>{% endif %}
+            {% if mssg_1 %}<div style="color:red;text-align: center">{{ mssg_1 }}</div>{% endif %}
+            <form class="form-horizontal" role="form" action="{% url 'main:update' selected_date.id %}" method="POST">
+            {% csrf_token %}
+
+                <div class="row">
+                    <div class="col-lg-6 col-sm-12">
+                        <div class="card animated pulse">
+                            <div class="content">
+                                <div class="row">
+                                    <div class="col-xs-9">
+                                       6:00 AM to 6:30 AM
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <label for="ss1"></label>
+                                        <select class="form-fill" name="check_1" id = "ss1" >
+                                            <option>--</option>
+                                            <option>Select</option>
+                                        </select>
+
+                                         {% if selected_date.check_1 == "2" %}
+                                            <div style="color:darkred">Slot Booked</div>
+
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-12">
+                        <div class="card animated pulse">
+                            <div class="content">
+                                <div class="row">
+                                    <div class="col-xs-9">
+                                       6:30 AM to 7:00 AM
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <label for="ss2"></label>
+                                        <select class="form-fill" name="check_2" id = "ss2">
+                                            <option>--</option>
+                                            <option>Select</option>
+                                        </select>
+
+                                         {% if selected_date.check_2 == "2" %}
+                                            <div style="color:darkred">Slot Booked</div>
+
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-12">
+                        <div class="card animated pulse">
+                            <div class="content">
+                                <div class="row">
+                                    <div class="col-xs-9">
+                                       7:00 AM to 7:30 AM
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <label for="ss3"></label>
+                                        <select class="form-fill" name="check_3" id = "ss3" >
+                                            <option>--</option>
+                                            <option>Select</option>
+                                        </select>
+
+                                         {% if selected_date.check_3 == "2" %}
+                                            <div style="color:darkred">Slot Booked</div>
+
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-12">
+                        <div class="card animated pulse">
+                            <div class="content">
+                                <div class="row">
+                                    <div class="col-xs-9">
+                                       7:30 AM to 8:00 AM
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <label for="ss4"></label>
+                                        <select class="form-fill" name="check_4" id = "ss4" >
+                                            <option>--</option>
+                                            <option>Select</option>
+                                        </select>
+
+                                         {% if selected_date.check_4 == "2" %}
+                                            <div style="color:darkred">Slot Booked</div>
+
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-12">
+                        <div class="card animated pulse">
+                            <div class="content">
+                                <div class="row">
+                                    <div class="col-xs-9">
+                                       8:00 AM to 8:30 AM
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <label for="ss5"></label>
+                                        <select class="form-fill" name="check_5" id = "ss5" >
+                                            <option>--</option>
+                                            <option>Select</option>
+                                        </select>
+
+                                         {% if selected_date.check_5 == "2" %}
+                                            <div style="color:darkred">Slot Booked</div>
+
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-12">
+                        <div class="card animated pulse">
+                            <div class="content">
+                                <div class="row">
+                                    <div class="col-xs-9">
+                                       8:30 AM to 9:00 AM
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <label for="ss6"></label>
+                                        <select class="form-fill" name="check_6" id = "ss6" >
+                                            <option>--</option>
+                                            <option>Select</option>
+                                        </select>
+
+                                         {% if selected_date.check_6 == "2" %}
+                                            <div style="color:darkred">Slot Booked</div>
+
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-12">
+                        <div class="card animated pulse">
+                            <div class="content">
+                                <div class="row">
+                                    <div class="col-xs-9">
+                                       5:00 PM to 5:30 PM
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <label for="ss7"></label>
+                                        <select class="form-fill" name="check_7" id = "ss7" >
+                                            <option>--</option>
+                                            <option>Select</option>
+                                        </select>
+
+                                         {% if selected_date.check_7 == "2" %}
+                                            <div style="color:darkred">Slot Booked</div>
+
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-12">
+                        <div class="card animated pulse">
+                            <div class="content">
+                                <div class="row">
+                                    <div class="col-xs-9">
+                                       5:30 PM to 6:00 PM
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <label for="ss8"></label>
+                                        <select class="form-fill" name="check_8" id = "ss8" >
+                                            <option>--</option>
+                                            <option>Select</option>
+                                        </select>
+
+                                         {% if selected_date.check_8 == "2" %}
+                                            <div style="color:darkred">Slot Booked</div>
+
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-12">
+                        <div class="card animated pulse">
+                            <div class="content">
+                                <div class="row">
+                                    <div class="col-xs-9">
+                                       6:00 AM to 6:30 AM
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <label for="ss9"></label>
+                                        <select class="form-fill" name="check_9" id = "ss9" >
+                                            <option>--</option>
+                                            <option>Select</option>
+                                        </select>
+
+                                         {% if selected_date.check_9 == "2" %}
+                                            <div style="color:darkred">Slot Booked</div>
+
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-12">
+                        <div class="card animated pulse">
+                            <div class="content">
+                                <div class="row">
+                                    <div class="col-xs-9">
+                                       6:30 PM to 7:00 PM
+                                    </div>
+                                     <div class="col-xs-3">
+                                        <label for="ss10"></label>
+                                        <select class="form-fill" name="check_10" id = "ss10" >
+                                            <option>--</option>
+                                            <option>Select</option>
+                                        </select>
+
+                                         {% if selected_date.check_10 == "2" %}
+                                            <div style="color:darkred">Slot Booked</div>
+
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-12">
+                        <div class="card animated pulse">
+                            <div class="content">
+                                <div class="row">
+                                    <div class="col-xs-9">
+                                       7:00 PM to 7:30 PM
+                                    </div>
+                                     <div class="col-xs-3">
+                                        <label for="ss11"></label>
+                                        <select class="form-fill" name="check_11" id = "ss11" >
+                                            <option>--</option>
+                                            <option>Select</option>
+                                        </select>
+
+                                         {% if selected_date.check_11 == "2" %}
+                                            <div style="color:darkred">Slot Booked</div>
+
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-12">
+                        <div class="card animated pulse">
+                            <div class="content">
+                                <div class="row">
+                                    <div class="col-xs-9">
+                                       7:30 PM to 8:00 PM
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <label for="ss12"></label>
+                                        <select class="form-fill" name="check_12" id = "ss12" >
+                                            <option>--</option>
+                                            <option>Select</option>
+                                        </select>
+
+                                         {% if selected_date.check_12 == "2" %}
+                                            <div style="color:darkred">Slot Booked</div>
+
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-12">
+                        <div class="card animated pulse">
+                            <div class="content">
+                                <div class="row">
+                                    <div class="col-xs-9">
+                                       8:00 PM to 8:30 PM
+                                    </div>
+                                     <div class="col-xs-3">
+                                        <label for="ss13"></label>
+                                        <select class="form-fill" name="check_13" id = "ss13" >
+                                            <option>--</option>
+                                            <option>Select</option>
+                                        </select>
+
+                                         {% if selected_date.check_13 == "2" %}
+                                            <div style="color:darkred">Slot Booked</div>
+
+                                        {% endif %}
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-12">
+                        <div class="card animated pulse">
+                            <div class="content">
+                                <div class="row">
+                                    <div class="col-xs-9">
+                                       8:30 PM to 9:00 PM
+                                    </div>
+                                     <div class="col-xs-3">
+                                        <label for="ss14"></label>
+                                        <select class="form-fill" name="check_14" id = "ss14" >
+                                            <option>--</option>
+                                            <option>Select</option>
+                                        </select>
+
+                                         {% if selected_date.check_14 == "2" %}
+                                            <div style="color:darkred">Slot Booked</div>
+
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-12">
+                        <div class="card animated pulse">
+                            <div class="content">
+                                <div class="row">
+                                    <div class="col-xs-9">
+                                       9:00 PM to 9:30 PM
+                                    </div>
+                                     <div class="col-xs-3">
+                                        <label for="ss15"></label>
+                                        <select class="form-fill" name="check_15" id = "ss15" >
+                                            <option>--</option>
+                                            <option>Select</option>
+                                        </select>
+
+                                         {% if selected_date.check_15 == "2" %}
+                                            <div style="color:darkred">Slot Booked</div>
+
+                                        {% endif %}
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-12">
+                        <div class="card animated pulse">
+                            <div class="content">
+                                <div class="row">
+                                    <div class="col-xs-9">
+                                       9:30 PM to 10:00 PM
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <label for="ss16"></label>
+                                        <select class="form-fill" name="check_16" id = "ss16" >
+                                            <option>--</option>
+                                            <option>Select</option>
+                                        </select>
+
+                                         {% if selected_date.check_16 == "2" %}
+                                            <div style="color:darkred">Slot Booked</div>
+
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row " style="text-align:center">
+                    <div class="col-lg-12 col-sm-12">
+
+                            <strong>Purpose of Booking</strong>
+                            <textarea rows="9" class="form-control border-input" name="purpose" placeholder="Purose of Booking">Not Provided</textarea>
+
+                    </div>
+                </div>
+            <div style="text-align:center">
+                <br>
+            <button type="submit" class="btn btn-info btn-fill btn-wd">Submit</button>
+            </div>
+            </form>
+
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
+
+
+
+{% endblock %}
