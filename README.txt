@@ -10,7 +10,6 @@ Url to Login page : localhost/app/login
 Url to Django admin : localhost/admin 
 
 Django Admin User Credentials (also for dummy chairman login )- 
-Username : aa
-Password : qweasdzxc
+
 
 * Make new users using Django Admin Interface
